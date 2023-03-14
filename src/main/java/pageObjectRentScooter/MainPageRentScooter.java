@@ -10,13 +10,15 @@ public class MainPageRentScooter {
 
     // Локаторы
     // Кнопка принятия куки "да все привыкли"
-    private By cookieButton = By.id("rcc-confirm-button");
+    private static final By COOKIE_BUTTON = By.id("rcc-confirm-button");
     // Кнопка "Заказать" в хедере
-    private By headerOrderButton = By.className("Button_Button__ra12g");
+    private static final By HEADER_ORDER_BUTTON = By.className("Button_Button__ra12g");
     // Ссылка "Статус заказа" в хедере
-    private By statusOrderButton = By.className("Header_Link__1TAG7");
+    private static final By STATUS_ORDER_BUTTON = By.className("Header_Link__1TAG7");
     // Кнопка "Заказать" в середине страницы
-    private By middleOrderButton = By.className("Button_Button__ra12g Button_Middle__1CSJM");
+    private static final By MIDDLE_PAGE_ORDER_BUTTON = By.className("Button_Button__ra12g Button_Middle__1CSJM");
+    // Лого Самокат
+    private static final By LOGO_SAMOKAT = By.className("Header_LogoScooter__3lsAR");
     // Массив вопросов в разделе "Вопросы о важном"
     private static final By[] DROP_DOWN_LIST_QUESTIONS = new By[]{
             By.id("accordion__heading-0"),
@@ -44,16 +46,26 @@ public class MainPageRentScooter {
         this.driver = driver;
     }
 
+    public void clickLogoSamokat() {
+        driver.findElement(LOGO_SAMOKAT).click();
+    }
+
+    public String checkLoadHomePage() {
+        WebElement homeSubHeader = new WebDriverWait(driver, 5)
+                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//div[@class='Home_FourPart__1uthg']/div['Home_SubHeader__zwi_E']")));
+        return homeSubHeader.getText();
+    }
+
     public void clickCookieButton() {
-        driver.findElement(cookieButton).click();
+        driver.findElement(COOKIE_BUTTON).click();
     }
 
     public void clickHeaderOrderButton() {
-        driver.findElement(headerOrderButton).click();
+        driver.findElement(HEADER_ORDER_BUTTON).click();
     }
 
     public void clickMiddleOrderButton() {
-        driver.findElement(middleOrderButton).click();
+        driver.findElement(MIDDLE_PAGE_ORDER_BUTTON).click();
     }
 
     public void clickQuestion(int num_item) {
