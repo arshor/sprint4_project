@@ -7,6 +7,7 @@ import org.junit.Test;
 import pageObjectRentScooter.MainPageRentScooter;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class MainPageRentScooterTest {
     private WebDriver driver;
@@ -27,6 +28,16 @@ public class MainPageRentScooterTest {
         objMainPageRentScooter.clickLogoSamokat();
         String homeSubHeader = objMainPageRentScooter.checkLoadHomePage();
         assertEquals("На главную страницу «Самоката» пе перешли", homeSubHeader, "Вопросы о важном");
+    }
+
+    @Test
+    public void checkStatus_nonExistingOrder_showsError() {
+        MainPageRentScooter mainPage = new MainPageRentScooter(driver);
+        mainPage.clickCookieButton();
+        mainPage.clickCheckOrderButton();
+        mainPage.enterOrderNumber("9999999999");
+        mainPage.clickGoButton();
+        assertTrue(mainPage.isImageNotFoundDisplayed());
     }
 
     @After

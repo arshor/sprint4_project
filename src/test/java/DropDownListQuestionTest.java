@@ -59,16 +59,6 @@ public class DropDownListQuestionTest {
         assertEquals("Текст ответа не совпадает в вопросе: " + question, expectedAnswer, answer);
     }
 
-    @Test
-    public void checkClickLogoSamokat_ShowHomePage() {
-
-        MainPageRentScooter objMainPageRentScooter = new MainPageRentScooter(driver);
-
-        objMainPageRentScooter.clickLogoSamokat();
-        String homeSubHeader = objMainPageRentScooter.checkLoadHomePage();
-        assertEquals("На главную страницу «Самоката» пе перешли", homeSubHeader, "Вопросы о важном");
-    }
-
     @After
     public void tearDown() {
         driver.quit();
