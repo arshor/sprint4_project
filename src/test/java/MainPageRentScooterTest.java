@@ -31,6 +31,15 @@ public class MainPageRentScooterTest {
     }
 
     @Test
+    public void checkClickLogoYandex_ShowHomePage() {
+
+        MainPageRentScooter objMainPageRentScooter = new MainPageRentScooter(driver);
+        objMainPageRentScooter.clickCookieButton();
+        objMainPageRentScooter.clickLogoYandex();
+        assertTrue(objMainPageRentScooter.checkLoadHomePageYandex());
+    }
+
+    @Test
     public void checkStatus_nonExistingOrder_showsError() {
         MainPageRentScooter mainPage = new MainPageRentScooter(driver);
         mainPage.clickCookieButton();

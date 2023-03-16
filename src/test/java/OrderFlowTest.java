@@ -12,7 +12,6 @@ import org.openqa.selenium.opera.OperaDriver;
 import pageObjectRentScooter.MainPageRentScooter;
 import pageObjectRentScooter.OrderPageRentScooter;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)

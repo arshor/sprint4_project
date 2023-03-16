@@ -1,7 +1,6 @@
 package pageObjectRentScooter;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -18,6 +17,10 @@ public class MainPageRentScooter {
     private static final By MIDDLE_PAGE_ORDER_BUTTON = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
     // Лого Самокат
     private static final By LOGO_SAMOKAT = By.className("Header_LogoScooter__3lsAR");
+    // Лого Яндекс
+    private static final By LOGO_YANDEX = By.className("Header_LogoYandex__3TSOI");
+    //Лого Дзен
+    private static final By LOGO_DZEN = By.xpath(".//span[@aria-label='Логотип Дзен']/*[@class='zen-ui-generic-svg']");
     // Заголовок Вопросы о важном
     private static final By HEADER_QUESTIONS_ABOUT = By.xpath(".//div[@class='Home_FourPart__1uthg']/div['Home_SubHeader__zwi_E']");
     // Кнопка "Статус заказа"
@@ -47,6 +50,16 @@ public class MainPageRentScooter {
         WebElement homeSubHeader = new WebDriverWait(driver, 5).until(
                 ExpectedConditions.visibilityOfElementLocated(HEADER_QUESTIONS_ABOUT));
         return homeSubHeader.getText();
+    }
+
+    public void clickLogoYandex() {
+        driver.findElement(LOGO_YANDEX).click();
+    }
+
+    public boolean checkLoadHomePageYandex() {
+        WebElement homeHeaderYandex = new WebDriverWait(driver, 10).until(
+                ExpectedConditions.visibilityOfElementLocated(LOGO_YANDEX));
+        return homeHeaderYandex.isDisplayed();
     }
 
     public void clickCookieButton() {
