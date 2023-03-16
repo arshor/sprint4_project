@@ -29,16 +29,15 @@ public class DropDownListQuestionTest {
 
     @Parameterized.Parameters
     public static Object[][] getDropDownListData() {
-        return new Object[][] {
-                { QUESTIONS[0], EXPECTED_ANSWERS[0], 0},
-                { QUESTIONS[1], EXPECTED_ANSWERS[1], 1},
-                { QUESTIONS[2], EXPECTED_ANSWERS[2], 2},
-                { QUESTIONS[3], EXPECTED_ANSWERS[3], 3},
-                { QUESTIONS[4], EXPECTED_ANSWERS[4], 4},
-                { QUESTIONS[5], EXPECTED_ANSWERS[5], 5},
-                { QUESTIONS[6], EXPECTED_ANSWERS[6], 6},
-                { QUESTIONS[7], EXPECTED_ANSWERS[7], 7},
-        };
+
+        Object[][] objDropDownListData = new Object[QUESTIONS.length][3];
+        for (int i = 0; i < QUESTIONS.length; i++) {
+            objDropDownListData[i][0] = QUESTIONS[i];
+            objDropDownListData[i][1] = EXPECTED_ANSWERS[i];
+            objDropDownListData[i][2] = i;
+        }
+
+        return  objDropDownListData;
     }
 
     @Before

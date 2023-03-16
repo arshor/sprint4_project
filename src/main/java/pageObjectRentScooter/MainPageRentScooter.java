@@ -14,10 +14,8 @@ public class MainPageRentScooter {
     private static final By COOKIE_BUTTON = By.id("rcc-confirm-button");
     // Кнопка "Заказать" в хедере
     private static final By HEADER_ORDER_BUTTON = By.className("Button_Button__ra12g");
-    // Ссылка "Статус заказа" в хедере
-    private static final By STATUS_ORDER_BUTTON = By.className("Header_Link__1TAG7");
     // Кнопка "Заказать" в середине страницы
-    private static final By MIDDLE_PAGE_ORDER_BUTTON = By.className("Button_Button__ra12g Button_Middle__1CSJM");
+    private static final By MIDDLE_PAGE_ORDER_BUTTON = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
     // Лого Самокат
     private static final By LOGO_SAMOKAT = By.className("Header_LogoScooter__3lsAR");
     // Заголовок Вопросы о важном
@@ -31,47 +29,9 @@ public class MainPageRentScooter {
     // Картинка Заказа не найден
     private static final By NOT_FOUND_IMAGE = By.cssSelector("div.Track_NotFound__6oaoY > img");
     // Массив вопросов в разделе "Вопросы о важном"
-    private static final By[] DROP_DOWN_LIST_QUESTIONS = new By[]{
-            By.id("accordion__heading-0"),
-            By.id("accordion__heading-1"),
-            By.id("accordion__heading-2"),
-            By.id("accordion__heading-3"),
-            By.id("accordion__heading-4"),
-            By.id("accordion__heading-5"),
-            By.id("accordion__heading-6"),
-            By.id("accordion__heading-7")};
+    private static final String DROP_DOWN_LIST_QUESTIONS = "accordion__heading-";
     // Массив ответов в разделе "Вопросы о важном"
-    private static final By[] DROP_DOWN_LIST_ANSWERS = new By[]{
-            By.xpath(".//div[@id='accordion__panel-0']/p"),
-            By.xpath(".//div[@id='accordion__panel-1']/p"),
-            By.xpath(".//div[@id='accordion__panel-2']/p"),
-            By.xpath(".//div[@id='accordion__panel-3']/p"),
-            By.xpath(".//div[@id='accordion__panel-4']/p"),
-            By.xpath(".//div[@id='accordion__panel-5']/p"),
-            By.xpath(".//div[@id='accordion__panel-6']/p"),
-            By.xpath(".//div[@id='accordion__panel-7']/p")};
-    //Поле Имя
-    private static final By NAME_FIELD = By.xpath(".//input[@placeholder='* Имя']");
-    // Поле фамилия
-    private static final By SURNAME_FIELD = By.xpath(".//input[@placeholder='* Фамилия']");
-    // Поле адрес
-    private static final By ADDRESS_FIELD = By.xpath(".//input[@placeholder='* Адрес: куда привезти заказ']");
-    // Поле Станция метро
-    private static final By METRO_FIELD = By.xpath(".//input[@placeholder='* Станция метро']");
-    // Поле Телефон
-    private static final By PHONE_FIELD = By.xpath(".//input[@placeholder='* Телефон: на него позвонит курьер']");
-    // Кнопка Далее
-    private static final By NEXT_BUTTON = By.xpath(".//div[@class='Order_NextButton__1_rCA']/button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
-    // Поле Когда привезти самокат?
-    private static final By DATE_FIELD = By.xpath(".//input[@placeholder='* Когда привезти самокат']");
-    // Поле Срок аренды
-    private static final By PERIOD_FIELD = By.xpath(".//div[text()='* Срок аренды']");
-    // Поле Цвет самоката
-
-    // Поле Комментарий для курьера
-    private static final By COMMENT_FIELD = By.xpath(".//input[@placeholder='Комментарий для курьера']");
-    //Кнопка Заказать итоговая
-    private static final By ORDER_BUTTON_FINAL = By.xpath(".//div[@class='Order_Buttons__1xGrp']/button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
+    private static final String DROP_DOWN_LIST_ANSWERS = ".//div[@id='accordion__panel-%d']/p";
 
     private WebDriver driver;
 
@@ -93,17 +53,19 @@ public class MainPageRentScooter {
         driver.findElement(COOKIE_BUTTON).click();
     }
 
+    // Check DropDown List Questions
     public void clickQuestion(int num_item) {
-        driver.findElement(DROP_DOWN_LIST_QUESTIONS[num_item]).click();
+        driver.findElement(By.id(DROP_DOWN_LIST_QUESTIONS + num_item)).click();
     }
 
     public String getAnswer(int num_item) {
         WebElement dropDownItem = new WebDriverWait(driver, 5).until(
-                ExpectedConditions.visibilityOfElementLocated(DROP_DOWN_LIST_ANSWERS[num_item]));
+                ExpectedConditions.visibilityOfElementLocated(By.xpath(String.format(DROP_DOWN_LIST_ANSWERS, num_item))));
         String answerText = dropDownItem.getText();
         return answerText;
     }
 
+    // Check Status nonExisting Order
     public void clickCheckOrderButton() {
         driver.findElement(CHECK_STATUS_ORDER_BUTTON).click();
     }
@@ -125,73 +87,12 @@ public class MainPageRentScooter {
     }
 
     //Order flow
-    public void clickHeaderOrderButton() {
-        driver.findElement(HEADER_ORDER_BUTTON).click();
+    public void clickOrderButton(String orderButton) {
+        if (orderButton.equals("headerButton")) {
+            driver.findElement(HEADER_ORDER_BUTTON).click();
+        } else if (orderButton.equals("middleButton")) {
+            driver.findElement(MIDDLE_PAGE_ORDER_BUTTON).click();
+        }
     }
 
-    public void clickMiddleOrderButton() {
-        driver.findElement(MIDDLE_PAGE_ORDER_BUTTON).click();
-    }
-
-    public void enterName(String name) {
-        WebElement inputFieldName = new WebDriverWait(driver, 10).until(
-                ExpectedConditions.visibilityOfElementLocated(NAME_FIELD));
-        inputFieldName.sendKeys(name);
-    }
-
-    public void enterSurname(String surname) {
-        WebElement inputFieldSurname = new WebDriverWait(driver, 10).until(
-                ExpectedConditions.visibilityOfElementLocated(SURNAME_FIELD));
-        inputFieldSurname.sendKeys(surname);
-    }
-
-    public void enterAddress(String address) {
-        WebElement inputFieldAddress = new WebDriverWait(driver, 10).until(
-                ExpectedConditions.visibilityOfElementLocated(ADDRESS_FIELD));
-        inputFieldAddress.sendKeys(address);
-    }
-
-    public void choiceMetro(String metro) {
-        WebElement inputFieldMetro = new WebDriverWait(driver, 10).until(
-                ExpectedConditions.visibilityOfElementLocated(METRO_FIELD));
-        inputFieldMetro.click();
-        inputFieldMetro.sendKeys(metro);
-        inputFieldMetro.sendKeys(Keys.DOWN, Keys.ENTER);
-    }
-
-    public void enterPhone(String phone) {
-        WebElement inputFieldPhone = new WebDriverWait(driver, 10).until(
-                ExpectedConditions.visibilityOfElementLocated(PHONE_FIELD));
-        inputFieldPhone.sendKeys(phone);
-    }
-
-    public void clickNextButton() {
-        driver.findElement(NEXT_BUTTON).click();
-    }
-
-    public void enterDate(String date) {
-        WebElement inputFieldDate = new WebDriverWait(driver, 10).until(
-                ExpectedConditions.visibilityOfElementLocated(DATE_FIELD));
-        inputFieldDate.sendKeys(date);
-        inputFieldDate.sendKeys(Keys.ENTER);
-    }
-
-    public void enterPeriod(String period) {
-        WebElement inputFieldPeriod = new WebDriverWait(driver, 10).until(
-                ExpectedConditions.visibilityOfElementLocated(PERIOD_FIELD));
-        inputFieldPeriod.click();
-        String locatorSelectListPeriod = String.format(".//div[@class='Dropdown-root is-open']//div[text()='%s']", period);
-        WebElement selectListPeriod = new WebDriverWait(driver, 10).until(
-                ExpectedConditions.visibilityOfElementLocated(By.xpath(locatorSelectListPeriod)));
-    }
-
-    public void enterComment(String comment) {
-        WebElement inputFieldComment = new WebDriverWait(driver, 10).until(
-                ExpectedConditions.visibilityOfElementLocated(COMMENT_FIELD));
-        inputFieldComment.sendKeys(comment);
-    }
-
-    public void clickOrderButtonFinal() {
-        driver.findElement(ORDER_BUTTON_FINAL).click();
-    }
 }
