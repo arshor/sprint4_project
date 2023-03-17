@@ -67,7 +67,7 @@ public class OrderFlowTest {
     }
 
     @Test
-    public void checkOrderFlowHeaderButton_ShowOrderConfirmation() {
+    public void checkOrderFlow_ShowOrderConfirmation() {
 
         MainPageRentScooter mainPage = new MainPageRentScooter(driver);
         mainPage.clickCookieButton();
